@@ -1,0 +1,19 @@
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*.tmp
+
+#Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+
+# ===== Misc =====
+.cache/
+.tmp/
+*.bak
+
