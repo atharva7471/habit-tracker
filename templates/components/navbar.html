@@ -1,0 +1,40 @@
+<nav class="bg-white shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+
+        <a href="/" class="text-xl font-bold text-indigo-600">
+            HabitTracker
+        </a>
+
+        <div class="flex items-center space-x-4">
+            {% if user.is_authenticated %}
+            <a href="{% url 'archived-habits' %}"
+                class="text-sm text-gray-600 hover:underline">
+                Archived
+            </a>
+
+            <span class="text-sm text-gray-600">
+                Hi, {{ user.username }}
+            </span>
+
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit"
+                    class="text-sm text-red-500 hover:underline">
+                    Logout
+                </button>
+            </form>
+
+            {% else %}
+            <a href="{% url 'login' %}"
+                class="text-sm text-indigo-600 hover:underline">
+                Login
+            </a>
+
+            <a href="{% url 'register' %}"
+                class="text-sm text-indigo-600 hover:underline">
+                Register
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</nav>

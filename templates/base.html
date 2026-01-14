@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}{% endblock %} Habit Tracker </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- Tailwind CSS -->
+        <script src="https://cdn.tailwindcss.com"></script>
+
+        {% block extra_css %}{% endblock %}
+    </head>
+
+    <body class="bg-gray-100 text-gray-900 min-h-full">
+
+        <!-- Navbar -->
+        {% include "components/navbar.html" %}
+
+        <!-- Flash Messages -->
+        <div class="max-w-6xl mx-auto px-4 mt-4">
+            {% include "components/messages.html" %}
+        </div>
+
+        <!-- Main Content -->
+        <main class="max-w-6xl mx-auto px-4 py-6">
+            {% block content %}{% endblock %}
+        </main>
+
+        {% block extra_js %}{% endblock %}
+        <script>
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (let cookie of cookies) {
+        cookie = cookie.trim();
+        if (cookie.startsWith(name + '=')) {
+          cookieValue = decodeURIComponent(cookie.slice(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+
+  const csrftoken = getCookie('csrftoken');
+
+  function toggleHabit(btn) {
+    const habitId = btn.dataset.habitId;
+
+    fetch(`/habits/${habitId}/toggle/`, {
+      method: 'POST',
+      headers: {
+        'X-CSRFToken': csrftoken,
+        'X-Requested-With': 'XMLHttpRequest'
+      }
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.completed) {
+        btn.innerText = '✓ Done';
+        btn.classList.remove('bg-gray-300', 'text-gray-700');
+        btn.classList.add('bg-green-500', 'text-white');
+      } else {
+        btn.innerText = 'Mark Done';
+        btn.classList.remove('bg-green-500', 'text-white');
+        btn.classList.add('bg-gray-300', 'text-gray-700');
+      }
+    });
+  }
+</script>
+    </body>
+</html>

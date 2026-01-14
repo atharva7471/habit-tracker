@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Archived Habits{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold">Archived Habits</h1>
+    <a href="{% url 'dashboard' %}"
+       class="text-sm text-indigo-600 hover:underline">
+      ← Back to Dashboard
+    </a>
+  </div>
+
+  {% if habits %}
+    <div class="bg-white rounded shadow divide-y">
+      {% for habit in habits %}
+        <div class="p-4 flex justify-between items-center">
+
+          <div>
+            <p class="font-medium">{{ habit.name }}</p>
+            {% if habit.description %}
+              <p class="text-sm text-gray-500">{{ habit.description }}</p>
+            {% endif %}
+          </div>
+
+          <form method="post"
+                action="{% url 'restore-habit' habit.id %}">
+            {% csrf_token %}
+            <button
+              class="px-3 py-1 text-sm bg-green-500 text-white rounded hover:bg-green-600">
+              Restore
+            </button>
+          </form>
+
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="text-gray-500 text-sm">
+      No archived habits 🎉
+    </p>
+  {% endif %}
+
+</div>
+{% endblock %}

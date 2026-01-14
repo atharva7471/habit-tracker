@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Edit Habit{% endblock %}
+
+{% block content %}
+<div class="max-w-lg mx-auto bg-white p-6 rounded shadow">
+  <h2 class="text-2xl font-bold mb-4">Edit Habit</h2>
+
+  <form method="post">
+    {% csrf_token %}
+    
+    {{ form.as_p }}
+
+    <div class="flex justify-between mt-4">
+      <a href="{% url 'dashboard' %}"
+         class="text-gray-500 hover:underline">
+        Cancel
+      </a>
+
+      <button type="submit"
+              class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">
+        Save Changes
+      </button>
+    </div>
+  </form>
+</div>
+{% endblock %}
